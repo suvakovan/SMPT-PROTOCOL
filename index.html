@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Email Sender</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-mesh"></div>
+    <div class="container">
+        <div class="glass-card" id="emailCard">
+            <header>
+                <h1>Send Email</h1>
+                <p>Secure & Animated</p>
+            </header>
+            <form id="emailForm">
+                <div class="input-group">
+                    <input type="email" id="sender_email" required placeholder=" ">
+                    <label for="sender_email">Your Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" required placeholder=" ">
+                    <label for="password">App Password</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="receiver_email" required placeholder=" ">
+                    <label for="receiver_email">Recipient Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="subject" required placeholder=" ">
+                    <label for="subject">Subject</label>
+                </div>
+                <div class="input-group">
+                    <textarea id="body" required placeholder=" " rows="4"></textarea>
+                    <label for="body">Message</label>
+                </div>
+                <button type="submit" id="sendBtn">
+                    <span class="btn-text">Send Email</span>
+                    <div class="plane-icon">✈️</div>
+                </button>
+            </form>
+            <div id="message" class="hidden"></div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

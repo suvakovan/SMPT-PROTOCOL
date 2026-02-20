@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMTP Protocol Mailer — Premium Email Sender</title>
+    <meta name="description" content="Send emails securely using SMTP protocol with a premium, modern interface.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-aurora">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+        <div class="bg-grid"></div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container" id="appContainer">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h2>SMTP Mailer</h2>
+                    <span class="version-badge">v2.0</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-tab="compose" id="navCompose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
+                    <span>Compose</span>
+                </button>
+                <button class="nav-item" data-tab="history" id="navHistory">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>History</span>
+                    <span class="badge" id="historyBadge">0</span>
+                </button>
+                <button class="nav-item" data-tab="inbox" id="navInbox">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    <span>Inbox</span>
+                </button>
+                <button class="nav-item" data-tab="settings" id="navSettings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51-1z" />
+                    </svg>
+                    <span>Settings</span>
+                </button>
+                <a href="#" target="_blank" class="nav-item github-link" id="navGitHub">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                    <span>GitHub</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="connection-status" id="connectionStatus">
+                    <div class="status-dot"></div>
+                    <span>Checking...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+
+            <!-- ===================== COMPOSE TAB ===================== -->
+            <section class="tab-content active" id="tabCompose">
+                <div class="content-header">
+                    <div>
+                        <h1>Compose Email</h1>
+                        <p class="subtitle">Send messages securely via SMTP protocol</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="sender-chip" id="senderChip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                height="16">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <span id="senderDisplay">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="compose-area">
+                    <form id="emailForm" class="email-form">
+                        <!-- From (Fixed - Display Only) -->
+                        <div class="form-row from-row">
+                            <label class="row-label">FROM</label>
+                            <div class="fixed-sender" id="fixedSenderDisplay">
+                                <div class="sender-avatar" id="senderAvatar">S</div>
+                                <div class="sender-info">
+                                    <span class="sender-name" id="senderName">SMTP Mailer</span>
+                                    <span class="sender-email" id="senderEmail">Loading...</span>
+                                </div>
+                                <div class="locked-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="14" height="14">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                    Fixed
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- To -->
+                        <div class="form-row">
+                            <label class="row-label" for="receiver_email">TO</label>
+                            <input type="email" id="receiver_email" placeholder="recipient@example.com" required
+                                autocomplete="email">
+                        </div>
+
+                        <!-- Subject -->
+                        <div class="form-row">
+                            <label class="row-label" for="subject">SUBJECT</label>
+                            <input type="text" id="subject" placeholder="Enter email subject..." required>
+                        </div>
+
+                        <!-- Priority -->
+                        <div class="form-row priority-row">
+                            <label class="row-label">PRIORITY</label>
+                            <div class="priority-selector">
+                                <button type="button" class="priority-btn" data-priority="low" id="priorityLow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="14" height="14">
+                                        <polyline points="6 9 12 15 18 9" />
+                                    </svg>
+                                    Low
+                                </button>
+                                <button type="button" class="priority-btn active" data-priority="normal"
+                                    id="priorityNormal">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="14" height="14">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Normal
+                                </button>
+                                <button type="button" class="priority-btn" data-priority="high" id="priorityHigh">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="14" height="14">
+                                        <polyline points="18 15 12 9 6 15" />
+                                    </svg>
+                                    High
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Message Body -->
+                        <div class="form-row body-row">
+                            <label class="row-label" for="body">MESSAGE</label>
+                            <textarea id="body" placeholder="Write your message here..." required rows="8"></textarea>
+                            <div class="char-count"><span id="charCount">0</span> characters</div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="clearBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                    height="18">
+                                    <polyline points="3 6 5 6 21 6" />
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                </svg>
+                                Clear
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="sendBtn">
+                                <span class="btn-content">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="18" height="18">
+                                        <line x1="22" y1="2" x2="11" y2="13" />
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                    </svg>
+                                    Send Email
+                                </span>
+                                <span class="btn-loading">
+                                    <div class="spinner"></div>
+                                    Sending...
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Success / Error Toast -->
+                    <div id="toast" class="toast hidden">
+                        <div class="toast-icon" id="toastIcon"></div>
+                        <div class="toast-content">
+                            <span class="toast-title" id="toastTitle"></span>
+                            <span class="toast-message" id="toastMessage"></span>
+                        </div>
+                        <button class="toast-close" id="toastClose">&times;</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== HISTORY TAB ===================== -->
+            <section class="tab-content" id="tabHistory">
+                <div class="content-header">
+                    <div>
+                        <h1>Email History</h1>
+                        <p class="subtitle">Track all your sent emails</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" id="refreshHistory">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                            height="16">
+                            <polyline points="23 4 23 10 17 10" />
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="empty-state" id="emptyHistory">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64"
+                            height="64">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        <h3>No emails sent yet</h3>
+                        <p>Your sent email history will appear here</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== INBOX TAB ===================== -->
+            <section class="tab-content" id="tabInbox">
+                <div class="content-header">
+                    <div>
+                        <h1>Inbox</h1>
+                        <p class="subtitle">Securely receive emails via IMAP protocol</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" id="refreshInbox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                            height="16">
+                            <polyline points="23 4 23 10 17 10" />
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                        </svg>
+                        Fetch Emails
+                    </button>
+                </div>
+                <div class="inbox-list" id="inboxList">
+                    <div class="empty-state" id="emptyInbox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64"
+                            height="64">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        <h3>No emails found</h3>
+                        <p>Click "Fetch Emails" to check your inbox</p>
+                    </div>
+                </div>
+            </section>
+            <section class="tab-content" id="tabSettings">
+                <div class="content-header">
+                    <div>
+                        <h1>Settings</h1>
+                        <p class="subtitle">SMTP server configuration & status</p>
+                    </div>
+                </div>
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                height="20">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                                <line x1="6" y1="6" x2="6.01" y2="6" />
+                                <line x1="6" y1="18" x2="6.01" y2="18" />
+                            </svg>
+                            <h3>SMTP Server</h3>
+                        </div>
+                        <div class="settings-info">
+                            <div class="info-row">
+                                <span class="info-label">Server</span>
+                                <span class="info-value" id="smtpServer">smtp.gmail.com</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Port</span>
+                                <span class="info-value" id="smtpPort">587</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Encryption</span>
+                                <span class="info-value">
+                                    <span class="status-pill status-active">TLS/STARTTLS</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                height="20">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <h3>Sender Account</h3>
+                        </div>
+                        <div class="settings-info">
+                            <div class="info-row">
+                                <span class="info-label">Name</span>
+                                <span class="info-value" id="settSenderName">—</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Email</span>
+                                <span class="info-value" id="settSenderEmail">—</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Status</span>
+                                <span class="info-value" id="settSenderStatus">
+                                    <span class="status-pill status-warning">Checking...</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card full-width">
+                        <div class="settings-card-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                height="20">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
+                            </svg>
+                            <h3>Setup Instructions</h3>
+                        </div>
+                        <div class="setup-instructions">
+                            <div class="instruction-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Enable 2-Step Verification</h4>
+                                    <p>Go to your Google Account → Security → 2-Step Verification → Turn On</p>
+                                </div>
+                            </div>
+                            <div class="instruction-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Generate App Password</h4>
+                                    <p>Google Account → Security → App Passwords → Generate for "Mail"</p>
+                                </div>
+                            </div>
+                            <div class="instruction-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Set Environment Variables</h4>
+                                    <code class="code-block">
+                                        $env:SMTP_SENDER_EMAIL = "your@gmail.com"<br>
+                                        $env:SMTP_SENDER_PASSWORD = "your_app_password"<br>
+                                        $env:SMTP_SENDER_NAME = "Your Name"
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="instruction-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Restart the Server</h4>
+                                    <p>Run <code>python app.py</code> again to apply the new settings.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

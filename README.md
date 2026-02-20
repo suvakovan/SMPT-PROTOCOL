@@ -3,6 +3,8 @@
 ## 🎯 Overview
 The **SMTP Protocol Mailer** is a secure and reliable email dispatch system built on the **Simple Mail Transfer Protocol (SMTP)**. It uses a Python-based backend and a modern interface to send structured, authenticated emails through trusted mail servers such as Gmail.
 
+**Source Code:** [GitHub Repository](https://github.com/suvakovan/SMPT-PROTOCOL.git)
+
 The system focuses on:
 - **Secure communication**
 - **Reliable delivery**

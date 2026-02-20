@@ -7,7 +7,13 @@ from email.header import decode_header
 import imaplib
 import os
 import json
+import email
+import time
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env file if it exists
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -33,7 +39,7 @@ def home():
 
 
 # Repository configuration
-REPO_URL = os.getenv("REPO_URL", "https://github.com/suvakovan/SMPT-PROTOCOL")
+REPO_URL = os.getenv("REPO_URL", "https://github.com/suvakovan/SMPT-PROTOCOL.git")
 
 @app.route('/config', methods=['GET'])
 def get_config():
@@ -124,6 +130,7 @@ def send_email():
     message.attach(html_part)
 
     try:
+        print(f"DEBUG: Attempting SMTP login for: {FIXED_SENDER_EMAIL[:3]}***@{FIXED_SENDER_EMAIL.split('@')[-1] if '@' in FIXED_SENDER_EMAIL else 'unknown'}")
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.ehlo()
         server.starttls()

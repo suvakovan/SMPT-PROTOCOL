@@ -17,6 +17,7 @@ function initNavigation() {
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             const tabName = item.dataset.tab;
+            if (!tabName) return; // Skip if it's not a tab (like the GitHub link)
 
             // Update active nav
             navItems.forEach(n => n.classList.remove('active'));
